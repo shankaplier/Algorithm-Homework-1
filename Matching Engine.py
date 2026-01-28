@@ -5,7 +5,6 @@ import sys
 
 if __name__ == "__main__":
 
-    n = 0
     student = {}
     hospital = {}
     unvisited = Queue()
@@ -20,40 +19,41 @@ if __name__ == "__main__":
             else:
                 f.seek(0)
 
-            n = int(f.readline())
+            # Variable that keeps track of how many students and hospitals are in the input file
+            data_size = int(f.readline())
 
-            for i in range(n):
+            for i in range(data_size):
                 temp_array = f.readline().rstrip().split(" ")
                 if temp_array == ['']:
-                    raise ValueError(f"expected {n} hospitals but received {len(hospital)}. Please enter more hospitals")
+                    raise ValueError(f"expected {data_size} hospitals but received {len(hospital)}. Please enter more hospitals")
                 for index in range(len(temp_array)):
-                    if int(temp_array[index]) <= n:
+                    if int(temp_array[index]) <= data_size:
                         temp_array[index] = int(temp_array[index])
                     else:
-                        raise ValueError(f"For hospital {i+1}, received student {int(temp_array[index])} who is greater than the number of students possible {n}. Please Rectify it")
+                        raise ValueError(f"For hospital {i+1}, received student {int(temp_array[index])} who is greater than the number of students possible {data_size}. Please Rectify it")
 
 
-                if len(temp_array) < n or len(temp_array) > n:
-                    raise ValueError(f"For hospital {i+1}, received preference list of size {len(temp_array)} when it should be {n}.")
-                elif len(set(temp_array)) < n:
+                if len(temp_array) < data_size or len(temp_array) > data_size:
+                    raise ValueError(f"For hospital {i+1}, received preference list of size {len(temp_array)} when it should be {data_size}.")
+                elif len(set(temp_array)) < data_size:
                     raise ValueError(f"For hospital {i+1}, received duplicate students in preference list. Please make sure the students are distinct.")
                 hospital[i+1] = {"preferences" : temp_array, "matched" : "none", "visited" : "none"}
                 unvisited.put(i + 1)
 
-            for i in range(n):
+            for i in range(data_size):
                 temp_array = f.readline().rstrip().split(" ")
                 if temp_array == ['']:
-                    raise ValueError(f"expected {n} students but received {len(student)}. Please enter more students")
+                    raise ValueError(f"expected {data_size} students but received {len(student)}. Please enter more students")
                 for index in range(len(temp_array)):
-                    if int(temp_array[index]) <= n:
+                    if int(temp_array[index]) <= data_size:
                         temp_array[index] = int(temp_array[index])
                     else:
                         raise ValueError(
-                            f"For student {i + 1}, received hospital {int(temp_array[index])} who is greater than the number of hospitals possible {n}. Please Rectify it")
+                            f"For student {i + 1}, received hospital {int(temp_array[index])} who is greater than the number of hospitals possible {data_size}. Please Rectify it")
 
-                if len(temp_array) < n or len(temp_array) > n:
-                        raise ValueError(f"For student {i+1}, received preference list of size {len(temp_array)} when it should be {n}.")
-                elif len(set(temp_array)) < n:
+                if len(temp_array) < data_size or len(temp_array) > data_size:
+                        raise ValueError(f"For student {i+1}, received preference list of size {len(temp_array)} when it should be {data_size}.")
+                elif len(set(temp_array)) < data_size:
                     raise ValueError(f"For student {i+1}, received duplicate hospitals in preference list. Please make sure the hospitals are distinct.")
 
                 student[i + 1] = {"preferences": temp_array, "matched": "none", "visited": "none"}
@@ -88,8 +88,10 @@ if __name__ == "__main__":
         end_time = time.perf_counter()
         exec_time = end_time - start_time
 
-        print(student)
-        print(hospital)
-        print(exec_time)
+        with open("output.out", "w") as f:
+            for k, v in hospital.items():
+                f.write(f"{k}, {v["matched"]} \n")
+
+        # print(exec_time)
     except ValueError as e:
         print(e)
