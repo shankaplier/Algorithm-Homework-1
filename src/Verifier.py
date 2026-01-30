@@ -1,6 +1,7 @@
 # SHANE DOWNS AND SHASHANK GUTTA VERIFIER
+import time
 
-def read_matching_output(output_filename):
+def read_matching_output(output_filename):  # Retrieve the outputs for verification
     matches = {}
     try:
         with open(output_filename, 'r') as f:
@@ -12,7 +13,7 @@ def read_matching_output(output_filename):
     #print(matches)
     return matches
 
-def read_input(input_filename):
+def read_input(input_filename):  # Read in the inputs used for matching engine
     hospital_prefs = dict()
     student_prefs = dict()
     n = None
@@ -33,37 +34,38 @@ def read_input(input_filename):
 
     return n, hospital_prefs, student_prefs
 
-
-
 def check_validity(n, matches):
-    if len(matches.keys()) != n:
+    if len(matches.keys()) != n:  # Check duplicates and hospital count
         return False, "Wrong number of hospitals in matches"
-    elif len(set(matches.values())) != n:
+    elif len(set(matches.values())) != n:  # Ensure no duplicates and correct number of students
         return False, "Duplicate or missing students in matches"
-    elif set(matches.keys()) != set(range(1, n + 1)):
+    elif set(matches.keys()) != set(range(1, n + 1)):   # Hospital ID outside of scope
         return False, "Invalid hospital ids"
-    elif set(matches.values()) != set(range(1, n + 1)):
+    elif set(matches.values()) != set(range(1, n + 1)):  # Check student id numbers in scope
         return False, "Invalid student ids"
     else:
         return True, "Valid Matchings"
 
 def check_stability(n, matches, hospital_prefs, student_prefs):
     student_to_hospital = {s: h for h, s in matches.items()}
-    for h in range(1, n + 1):
-        curr_student = matches[h]
+    # use reverse student->hospital map for lookup in later step
+    for h in range(1, n + 1):  # Loop through all n hospitals
+        curr_student = matches[h] # Find the current student the hospital is matched with
         for s in hospital_prefs[h]:
-            if s == curr_student:
+            if s == curr_student:  # keep looping while students are preferred over current match
                 break
             students_curr_hospital = student_to_hospital[s]
             student_pref_list = student_prefs[s]
             if student_pref_list.index(h) < student_pref_list.index(students_curr_hospital):
+                # If both h and s prefer another candidate, we have a blocking/unstable pair
                 return False, f"Unstable: Hospital {h} and student {s} form blocking pair"
 
     return True, "Stable Matchings"
 
-if __name__ == '__main__':
-    matches = read_matching_output("../output.out")
-    n, hospital_prefs, student_prefs = read_input("../input/basic_stable_input.txt")
+def run_verifier(input_file_path, output_file_path):
+    #start_time = time.perf_counter()
+    matches = read_matching_output(output_file_path)
+    n, hospital_prefs, student_prefs = read_input(input_file_path)
 
     is_valid, message = check_validity(n, matches)
     print(message)
@@ -73,3 +75,10 @@ if __name__ == '__main__':
         print(message)
     else:
         print("INVALID")
+    #end_time = time.perf_counter()
+    #elapsed_time = end_time - start_time
+
+    #print(f"Elapsed Time: {elapsed_time} seconds")
+
+if __name__ == "__main__":
+    run_verifier("../input/large_stable.txt", "../outputs/output.out")
