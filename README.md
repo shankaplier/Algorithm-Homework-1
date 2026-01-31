@@ -62,3 +62,7 @@ The first CLI argument is the name of the input file and the second argument is 
 
 ## Task C
 ### IMPORTANT: Measure_Runtimes.py is functional but producing bad output. Please refer to our Excel graph to see completion of Task C
+![img.png](img.png)
+
+Obeservation: Both the matching algorithm and the verifier increase in running time with
+the increase in input size. Both increase roughly by the same size

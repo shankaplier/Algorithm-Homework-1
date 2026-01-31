@@ -3,7 +3,7 @@ import time
 from queue import Queue
 import sys
 
-output_filename = "output/example.out"
+output_filename = "../output/size-512.out"
 
 if __name__ == "__main__":
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
         with open(output_filename, "w") as f:
             for k, v in hospital.items():
-                f.write(f'{k}, {v["matched"]}\n')
+                f.write(f'{k} {v["matched"]}\n')
 
         # print(exec_time)
     except ValueError as e:
