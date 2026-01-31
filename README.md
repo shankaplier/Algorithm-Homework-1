@@ -50,9 +50,9 @@ The Verifier (`src/Verifier.py`) checks the output of the Matching Engine for:
 2. **Stability:** Confirms there is no blocking pair.
 
 ### Output
-- `Valid Matchings` followed by `Stable Matchings` if the matching is valid and stable
+- `VALID` followed by `STABLE` if the matching is valid and stable
 - `INVALID` with a reason (e.g., `Wrong number of hospitals in matches`, `Duplicate or missing students in matches`, `Invalid hospital ids`, `Invalid student ids`) if the matching is not valid
-- `Unstable: Hospital {h} and student {s} form blocking pair` if the matching contains a blocking pair
+- `UNSTABLE: Hospital {h} and student {s} form blocking pair` if the matching contains a blocking pair
 
 ### How to Run
 ```bash
