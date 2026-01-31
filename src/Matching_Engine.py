@@ -90,7 +90,7 @@ if __name__ == "__main__":
         end_time = time.perf_counter()
         exec_time = end_time - start_time
 
-        with open(output_filename, "w") as f:
+        with open(sys.argv[2], "w") as f:
             for k, v in hospital.items():
                 f.write(f'{k} {v["matched"]}\n')
 

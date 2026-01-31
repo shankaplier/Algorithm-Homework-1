@@ -35,10 +35,10 @@ Algorithm-Homework-1/
 ```bash
 python3 "src/Matching_Engine.py"
 ```
-Specify the input file you want to use as the CLI argument (see example below)
+Specify the input file and output file you want to use as the CLI argument (see example below)
 ### Example
 ```bash
-python3 "src/Matching_Engine.py" input/basic_stable_input.txt
+python3 "src/Matching_Engine.py" input/basic_stable_input.txt output/basic_stable_input.txt
 ```
 
 Once this is completed, check `output` directory for the output file. You can rename the output filename as a global variable at the top of the `Matching_Engine.py` code
