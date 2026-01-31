@@ -7,7 +7,7 @@ def read_matching_output(output_filename):  # Retrieve the outputs for verificat
     try:
         with open(output_filename, 'r') as f:
             for line in f.readlines():
-                hospital_id, student_id = line.strip().split(',')
+                hospital_id, student_id = line.strip().split(' ')
                 matches[int(hospital_id)] = int(student_id.strip())
     except IOError:
         print("Error reading output file from Matching Engine")
@@ -45,7 +45,7 @@ def check_validity(n, matches):
     elif set(matches.values()) != set(range(1, n + 1)):  # Check student id numbers in scope
         return False, "Invalid student ids"
     else:
-        return True, "Valid Matchings"
+        return True, "VALID"
 
 def check_stability(n, matches, hospital_prefs, student_prefs):
     student_to_hospital = {s: h for h, s in matches.items()}
@@ -59,9 +59,9 @@ def check_stability(n, matches, hospital_prefs, student_prefs):
             student_pref_list = student_prefs[s]
             if student_pref_list.index(h) < student_pref_list.index(students_curr_hospital):
                 # If both h and s prefer another candidate, we have a blocking/unstable pair
-                return False, f"Unstable: Hospital {h} and student {s} form blocking pair"
+                return False, f"UNSTABLE: Hospital {h} and student {s} form blocking pair"
 
-    return True, "Stable Matchings"
+    return True, "STABLE"
 
 def run_verifier(input_file_path, output_file_path):
     #start_time = time.perf_counter()
