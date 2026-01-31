@@ -3,6 +3,8 @@ import time
 from queue import Queue
 import sys
 
+output_filename = "output/example.out"
+
 if __name__ == "__main__":
 
     student = {}
@@ -88,7 +90,7 @@ if __name__ == "__main__":
         end_time = time.perf_counter()
         exec_time = end_time - start_time
 
-        with open("output.out", "w") as f:
+        with open(output_filename, "w") as f:
             for k, v in hospital.items():
                 f.write(f'{k}, {v["matched"]}\n')
 

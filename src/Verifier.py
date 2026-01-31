@@ -1,5 +1,6 @@
 # SHANE DOWNS AND SHASHANK GUTTA VERIFIER
 import time
+import sys
 
 def read_matching_output(output_filename):  # Retrieve the outputs for verification
     matches = {}
@@ -81,4 +82,10 @@ def run_verifier(input_file_path, output_file_path):
     #print(f"Elapsed Time: {elapsed_time} seconds")
 
 if __name__ == "__main__":
-    run_verifier("../input/large_stable.txt", "../outputs/output.out")
+    if len(sys.argv) != 3:
+        print("Usage: python3 Verifier.py <input_file> <output_file>")
+        sys.exit(1)
+    
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+    run_verifier(input_file, output_file)
